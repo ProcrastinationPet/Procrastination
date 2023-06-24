@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from '@expo/vector-icons/MaterialCommunityIcons'
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import style from './Style';
 import Home from '../views/Home';
 import Pet from '../views/Pet';
 import Shop from '../views/Shop';
@@ -10,54 +11,42 @@ import User from '../views/User';
 export default function Tab() {
     const {Screen, Navigator} = createBottomTabNavigator();
     const size = 40;
-    const color = "#FA7814";
   return (
-    <Navigator screenOptions={{headerShown:false}}>
-        <Screen 
-        name="Home" 
-        component={Home}
-        options={{
-          tabBarIcon: ()=>(
-            <Icon name='home' size={size} color={color}/>
-          )
-        }}
-        />
-        <Screen 
-        name="Pet" 
-        component={Pet}
-        options={{
-          tabBarIcon: ()=>(
-            <Icon name='paw' size={size} color={color}/>
-          )
-        }}
-        />
-        <Screen 
-        name="Tasks" 
-        component={Tasks}
-        options={{
-          tabBarIcon: ()=>(
-            <Icon name='clipboard-list' size={size} color={color}/>
-          )
-        }}
-        />
-        <Screen 
-        name="Shop" 
-        component={Shop}
-        options={{
-          tabBarIcon: ()=>(
-            <Icon name='cart' size={size} color={color}/>
-          )
-        }}
-        />
-        <Screen 
-        name="User" 
-        component={User}
-        options={{
-          tabBarIcon: ()=>(
-            <Icon name='account' size={size} color={color}/>
-          )
-        }}
-        />
+    <Navigator 
+    screenOptions={({route})=>({
+      tabBarIcon:(({color})=>{
+        let name = '';
+        switch(route.name){
+          case 'Home':
+            name = 'home';
+          break;
+          case 'Pet':
+            name = 'paw';
+          break;
+          case 'Tasks':
+            name = 'clipboard-list';
+          break;
+          case 'Shop':
+            name = 'cart';
+          break;
+          case 'User':
+            name = 'account';
+          break;
+        }
+        return <Icon name={name} size={size} color={color} />
+      }),
+      tabBarStyle: style.tabBottom,
+      tabBarShowLabel: false,
+      tabBarActiveTintColor: "#FA7814",
+      headerShown: false,
+      
+    })}
+    >
+        <Screen name="Home" component={Home}/>
+        <Screen name="Pet" component={Pet}/>
+        <Screen name="Tasks" component={Tasks}/>
+        <Screen name="Shop" component={Shop}/>
+        <Screen name="User" component={User}/>
     </Navigator>
   );
 }
